@@ -21,13 +21,20 @@ router.get("/", async (req, res) => {
 // @access Public
 
 router.get("/search", async (req, res) => {
-  try {
-    const q = req.query.q;
-    const jobs = await Job.find({});
-    res.json(jobs);
-  } catch (err) {
-    console.error(err);
-    res.status(404).json("404 Not Found");
+  const q = req.query.q;
+  if (q) {
+    const searchStr = new RegExp(q, "gi");
+    try {
+      const jobs = await Job.find({
+        keywords: searchStr,
+      });
+      res.json(jobs);
+    } catch (err) {
+      console.error(err);
+      res.status(404).json("404 Not Found");
+    }
+  } else {
+    res.status(400).json("Please Enter Something...");
   }
 });
 
@@ -58,6 +65,11 @@ router.post("/create", async (req, res) => {
     description,
     employer_id,
   } = req.body;
+
+  const sanitizedStr = title.replace(/[^a-zA-Z0-9]/g, "");
+
+  const keywords = sanitizedStr.toLowerCase();
+
   try {
     const newJob = new Job({
       title,
@@ -66,6 +78,7 @@ router.post("/create", async (req, res) => {
       currency,
       description,
       employer_id,
+      keywords,
     });
     await newJob.save();
     res.json(newJob);
