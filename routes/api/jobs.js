@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Job = require("../../models/Job");
+const uuid = require("uuid");
 
 // @route GET api/jobs
 // @desc Get all jobs
@@ -8,13 +9,23 @@ const Job = require("../../models/Job");
 
 router.get("/", async (req, res) => {
   try {
-    const jobs = await Job.find();
+    const jobs = await Job.find().limit(10);
+    const count = await Job.estimatedDocumentCount();
+
     res.json(jobs);
   } catch (err) {
     console.error(err);
     res.status(404).json("404 Not Found");
   }
 });
+
+// @route GET api/jobs/next_page
+// @desc Paginate: Next
+// @access Public
+
+// @route GET api/jobs/prev_page
+// @desc Paginate: Previous
+// @access Public
 
 // @route GET api/jobs/search
 // @desc Search Jobs
@@ -57,14 +68,7 @@ router.get("/:id", async (req, res) => {
 // @access Public
 
 router.post("/create", async (req, res) => {
-  const {
-    title,
-    company_name,
-    salary,
-    currency,
-    description,
-    employer_id,
-  } = req.body;
+  const { title, company_name, salary, currency, description } = req.body;
 
   const sanitizedStr = title.replace(/[^a-zA-Z0-9]/g, "");
 
@@ -77,7 +81,7 @@ router.post("/create", async (req, res) => {
       salary,
       currency,
       description,
-      employer_id,
+      employer_id: uuid.v4(),
       keywords,
     });
     await newJob.save();
