@@ -9,8 +9,7 @@ const uuid = require("uuid");
 
 router.get("/", async (req, res) => {
   try {
-    const jobs = await Job.find().limit(10);
-    const count = await Job.estimatedDocumentCount();
+    const jobs = await Job.find();
 
     res.json(jobs);
   } catch (err) {
@@ -18,14 +17,6 @@ router.get("/", async (req, res) => {
     res.status(404).json("404 Not Found");
   }
 });
-
-// @route GET api/jobs/next_page
-// @desc Paginate: Next
-// @access Public
-
-// @route GET api/jobs/prev_page
-// @desc Paginate: Previous
-// @access Public
 
 // @route GET api/jobs/search
 // @desc Search Jobs

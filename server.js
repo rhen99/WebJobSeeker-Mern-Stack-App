@@ -10,6 +10,7 @@ app.use(express.urlencoded({ extended: false }));
 //Define Routes
 
 app.use("/api/jobs", require("./routes/api/jobs"));
+app.use("/api/applicants", require("./routes/api/applicants"));
 
 const PORT = process.env.PORT || 5000;
 
