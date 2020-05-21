@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const Applicant = require("../../models/Applicant");
+const Applicant = require("../../../models/Applicant");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const config = require("config");
 
 // @route POST api/applicants/register
 // @desc Creates a Applicant User
@@ -26,26 +28,38 @@ router.post("/register", async (req, res) => {
       password,
     });
     bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(newUser.password, salt, (err, hash) => {
+      if (err) throw err;
+      bcrypt.hash(newUser.password, salt, async (err, hash) => {
         if (err) throw err;
-        newUser.password = hash;
+        try {
+          newUser.password = hash;
+          await newUser.save();
+
+          jwt.sign(
+            { id: newUser.id },
+            config.get("jwtSecret"),
+            { expiresIn: 3600 },
+            (err, token) => {
+              if (err) throw err;
+              res.json({
+                token,
+                user: {
+                  id: newUser.id,
+                  firstname: newUser.firstname,
+                  lastname: newUser.lastname,
+                  email: newUser.email,
+                },
+              });
+            }
+          );
+        } catch (err) {
+          console.error(err);
+        }
       });
-    });
-    await newUser.save();
-    res.json({
-      firstname,
-      lastname,
-      email,
     });
   } catch (err) {
     console.error(err);
   }
 });
-
-// @route POST api/applicant/login
-// @desc Authenticates a user.
-// @access Public
-
-router.post("/login", (req, res) => {});
 
 module.exports = router;
