@@ -23,6 +23,10 @@ const applicantSchema = new mongoose.Schema(
       type: String,
       min: 8,
     },
+    role: {
+      type: String,
+      default: "applicant",
+    },
     register_date: {
       type: Date,
       default: Date.now(),

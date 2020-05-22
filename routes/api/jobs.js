@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Job = require("../../models/Job");
 const uuid = require("uuid");
+const auth = require("../../middleware/auth");
 
 // @route GET api/jobs
 // @desc Get all jobs
@@ -20,9 +21,9 @@ router.get("/", async (req, res) => {
 
 // @route GET api/jobs/search
 // @desc Search Jobs
-// @access Public
+// @access Private
 
-router.get("/search", async (req, res) => {
+router.get("/search", auth, async (req, res) => {
   const q = req.query.q;
   if (q) {
     const searchStr = new RegExp(q, "gi");
@@ -42,9 +43,9 @@ router.get("/search", async (req, res) => {
 
 // @route GET api/jobs/:id
 // @desc Get One Job
-// @acces Public
+// @acces Private
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", auth, async (req, res) => {
   try {
     const job = await Job.findById(req.params.id);
     res.json(job);
@@ -56,9 +57,9 @@ router.get("/:id", async (req, res) => {
 
 // @route POST api/jobs/create
 // @desc Create a job.
-// @access Public
+// @access Private
 
-router.post("/create", async (req, res) => {
+router.post("/create", auth, async (req, res) => {
   const { title, company_name, salary, currency, description } = req.body;
 
   const sanitizedStr = title.replace(/[^a-zA-Z0-9]/g, "");
@@ -85,9 +86,9 @@ router.post("/create", async (req, res) => {
 
 // @route PUT api/jobs/:id
 // @desc Update a Job
-// @access Public
+// @access Private
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   try {
     await Job.updateOne({ _id: req.params.id }, { ...req.body });
     res.json("Updated Successfully");
@@ -99,9 +100,9 @@ router.put("/:id", async (req, res) => {
 
 // @route Delete api/jobs/:id
 // @desc Delete a Job
-// @access Public
+// @access Private
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   try {
     await Job.deleteOne({ _id: req.params.id });
     res.json("Deleted Successfully");

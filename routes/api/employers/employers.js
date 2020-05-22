@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const Applicant = require("../../../models/Applicant");
+const Employer = require("../../../models/Employer");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 
-// @route POST api/applicants/register
-// @desc Creates a Applicant User
+// @route POST api/employer/register
+// @desc Creates a Employer User
 // @access Public
 
 router.post("/register", async (req, res) => {
@@ -17,11 +17,11 @@ router.post("/register", async (req, res) => {
       msg: "Please fill in all fields.",
     });
   try {
-    const user = await Applicant.findOne({ email });
+    const user = await Employer.findOne({ email });
     if (user)
       return res.status(400).json({ msg: "This email has already been used." });
 
-    const newUser = new Applicant({
+    const newUser = new Employer({
       firstname,
       lastname,
       email,

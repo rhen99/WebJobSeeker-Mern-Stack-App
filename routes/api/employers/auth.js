@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const Applicant = require("../../../models/Applicant");
+const Employer = require("../../../models/Employer");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const auth = require("../../../middleware/auth");
 
-// @route POST api/applicant/auth
-// @desc Authenticate a Applicant User
+// @route POST api/employer/auth
+// @desc Authenticate a Employer User
 // @access Public
 
 router.post("/", async (req, res) => {
@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
       msg: "Please fill in all fields.",
     });
   try {
-    const user = await Applicant.findOne({ email });
+    const user = await Employer.findOne({ email });
     if (!user)
       return res.status(400).json({ msg: "This user does not exist." });
 
@@ -50,13 +50,13 @@ router.post("/", async (req, res) => {
   }
 });
 
-//@route GET api/applicant/auth/user
+//@route GET api/employer/auth/user
 //@desc Get user info.
 //@access Private
 
 router.get("/user", auth, async (req, res) => {
   try {
-    const user = await Applicant.findById(req.user.id).select("-password");
+    const user = await Employer.findById(req.user.id).select("-password");
 
     res.json(user);
   } catch (err) {
