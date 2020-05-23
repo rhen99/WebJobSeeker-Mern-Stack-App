@@ -3,6 +3,7 @@ const router = express.Router();
 const Job = require("../../models/Job");
 const uuid = require("uuid");
 const auth = require("../../middleware/auth");
+const Employer = require("../../models/Employer");
 
 // @route GET api/jobs
 // @desc Get all jobs
@@ -67,13 +68,15 @@ router.post("/create", auth, async (req, res) => {
   const keywords = sanitizedStr.toLowerCase();
 
   try {
+    const user = await Employer.findById(req.user.id);
+    if (!user) return res.status(403).json({ msg: "Forbidden access." });
     const newJob = new Job({
       title,
       company_name,
       salary,
       currency,
       description,
-      employer_id: uuid.v4(),
+      employer_id: req.user.id,
       keywords,
     });
     await newJob.save();
@@ -89,6 +92,8 @@ router.post("/create", auth, async (req, res) => {
 // @access Private
 
 router.put("/:id", auth, async (req, res) => {
+  const user = await Employer.findById(req.user.id);
+  if (!user) return res.status(403).json({ msg: "Forbidden access." });
   try {
     await Job.updateOne({ _id: req.params.id }, { ...req.body });
     res.json("Updated Successfully");
@@ -103,6 +108,8 @@ router.put("/:id", auth, async (req, res) => {
 // @access Private
 
 router.delete("/:id", auth, async (req, res) => {
+  const user = await Employer.findById(req.user.id);
+  if (!user) return res.status(403).json({ msg: "Forbidden access." });
   try {
     await Job.deleteOne({ _id: req.params.id });
     res.json("Deleted Successfully");
