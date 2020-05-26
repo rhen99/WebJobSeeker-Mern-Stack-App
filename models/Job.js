@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const moment = require("moment");
 const jobSchema = new mongoose.Schema(
   {
     title: {
@@ -24,13 +23,14 @@ const jobSchema = new mongoose.Schema(
     keywords: {
       type: String,
     },
-    date: {
+    created_at: {
       type: Date,
       default: Date.now(),
     },
-    expiration_date: {
+    expiring_at: {
       type: Date,
-      default: moment().subtract(1, "day"),
+      index: { expires: "43800m" },
+      default: Date.now(),
     },
   }
   //{ autoIndex: false }

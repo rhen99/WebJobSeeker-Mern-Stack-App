@@ -3,7 +3,6 @@ const router = express.Router();
 const Job = require("../../models/Job");
 const auth = require("../../middleware/auth");
 const Employer = require("../../models/Employer");
-const moment = require("moment");
 
 // @route GET api/jobs
 // @desc Get all jobs
@@ -12,29 +11,12 @@ const moment = require("moment");
 router.get("/", async (req, res) => {
   try {
     const jobs = await Job.find();
-    const expiredJobs = await Job.deleteMany({
-      expiration_date: { $lte: Date.now() },
-    });
-    console.log(expiredJobs);
     res.json(jobs);
   } catch (err) {
     console.error(err);
     res.status(404).json("404 Not Found");
   }
 });
-// @route GET api/jobs
-// @desc Get all jobs
-// @access Public
-
-router.delete("/", async (req, res) => {
-  try {
-    res.json(expiredJobs);
-  } catch (err) {
-    console.error(err);
-    res.status(404).json("404 Not Found");
-  }
-});
-
 // @route GET api/jobs/search
 // @desc Search Jobs
 // @access Private
