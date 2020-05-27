@@ -1,5 +1,6 @@
 const express = require("express");
 const connectDB = require("./config/db");
+const defineRoutes = require("./config/router");
 
 const app = express();
 connectDB();
@@ -8,12 +9,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 //Define Routes
-
-app.use("/api/jobs", require("./routes/api/jobs"));
-app.use("/api/applicants", require("./routes/api/applicants/applicants"));
-app.use("/api/applicants/auth", require("./routes/api/applicants/auth"));
-app.use("/api/employers", require("./routes/api/employers/employers"));
-app.use("/api/employers/auth", require("./routes/api/employers/auth"));
+defineRoutes(app);
 
 const PORT = process.env.PORT || 5000;
 

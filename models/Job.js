@@ -32,6 +32,25 @@ const jobSchema = new mongoose.Schema(
       index: { expires: "43800m" },
       default: Date.now(),
     },
+    applications: [
+      {
+        applicant_name: {
+          type: String,
+        },
+        subject: {
+          type: String,
+          required: true,
+        },
+        letter: {
+          type: String,
+          required: true,
+        },
+        created_at: {
+          type: Date,
+          default: Date.now(),
+        },
+      },
+    ],
   }
   //{ autoIndex: false }
 );
