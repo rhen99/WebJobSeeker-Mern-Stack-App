@@ -14,7 +14,9 @@ router.get("/", async (req, res) => {
     res.json(jobs);
   } catch (err) {
     console.error(err);
-    res.status(404).json("404 Not Found");
+    res.status(500).json({
+      msg: "Server Error",
+    });
   }
 });
 // @route GET api/jobs/search
@@ -32,7 +34,9 @@ router.get("/search", auth, async (req, res) => {
       res.json(jobs);
     } catch (err) {
       console.error(err);
-      res.status(404).json("404 Not Found");
+      res.status(500).json({
+        msg: "Server Error",
+      });
     }
   } else {
     res.status(400).json("Please Enter Something...");
@@ -49,7 +53,9 @@ router.get("/:id", auth, async (req, res) => {
     res.json(job);
   } catch (err) {
     console.error(err);
-    res.status(404).json("404 Not Found");
+    res.status(500).json({
+      msg: "Server Error",
+    });
   }
 });
 
@@ -112,4 +118,5 @@ router.delete("/:id", auth, async (req, res) => {
     res.status(404).json("404 Not Found");
   }
 });
+
 module.exports = router;
