@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Applicant = require("../../../models/Applicant");
+const Employer = require("../../../models/Employer");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
@@ -11,12 +12,33 @@ const config = require("config");
 
 router.post("/register", async (req, res) => {
   const { firstname, lastname, email, password } = req.body;
-
+  const emailRegex = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi;
+  const nameRegex = /^([A-Z][a-z]+([ ]?[a-z]?['-]?[A-Z][a-z]+)*)$/;
   if (!firstname || !lastname || !email || !password)
     return res.status(400).json({
-      msg: "Please fill in all fields.",
+      msg: "Please fill in all required fields.",
     });
+  if (!nameRegex.test(firstname) || !nameRegex.test(lastname))
+    return res
+      .status(400)
+      .json({ msg: "Your name should start with a capital letter." });
+  if (!emailRegex.test(email))
+    return res.status(400).json({ msg: "Please use a proper email." });
+
+  if (password.length < 8)
+    return res
+      .status(400)
+      .json({ msg: "Password must be at least 8 characters" });
+
   try {
+    const employer = await Employer.findOne({ email });
+
+    if (employer)
+      return res.status(400).json({
+        msg:
+          "This email is already used as an employer, please use a different email.",
+      });
+
     const user = await Applicant.findOne({ email });
     if (user)
       return res.status(400).json({ msg: "This email has already been used." });
@@ -55,6 +77,7 @@ router.post("/register", async (req, res) => {
           );
         } catch (err) {
           console.error(err);
+          res.status(500).json({ msg: "Server Error" });
         }
       });
     });

@@ -65,11 +65,13 @@ router.get("/:id", auth, async (req, res) => {
 
 router.post("/create", auth, async (req, res) => {
   const { title, company_name, salary, currency, description } = req.body;
+  const keywords = title.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+  if (!title || !company_name || !description)
+    return res.status(400).json({ msg: "Please fill in all required fields." });
 
   try {
     const user = await Employer.findById(req.user.id);
     if (!user) return res.status(403).json({ msg: "Forbidden access." });
-    const keywords = title.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
     const newJob = new Job({
       title,
       company_name,
@@ -96,10 +98,10 @@ router.put("/:id", auth, async (req, res) => {
   if (!user) return res.status(403).json({ msg: "Forbidden access." });
   try {
     await Job.updateOne({ _id: req.params.id }, { ...req.body });
-    res.json("Updated Successfully");
+    res.json({ msg: "Update Successfully" });
   } catch (err) {
     console.error(err);
-    res.status(404).json("404 Not Found");
+    res.status(500).json("Server Error");
   }
 });
 
@@ -112,10 +114,10 @@ router.delete("/:id", auth, async (req, res) => {
   if (!user) return res.status(403).json({ msg: "Forbidden access." });
   try {
     await Job.deleteOne({ _id: req.params.id });
-    res.json("Deleted Successfully");
+    res.json({ msg: "Deleted Successfully" });
   } catch (err) {
     console.error(err);
-    res.status(404).json("404 Not Found");
+    res.status(500).json("Server Error");
   }
 });
 

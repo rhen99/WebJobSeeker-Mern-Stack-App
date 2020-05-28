@@ -15,17 +15,19 @@ router.post("/", async (req, res) => {
 
   if (!email || !password)
     return res.status(400).json({
-      msg: "Please fill in all fields.",
+      msg: "Please fill in all required fields.",
     });
   try {
     const user = await Employer.findOne({ email });
     if (!user)
-      return res.status(400).json({ msg: "This user does not exist." });
+      return res
+        .status(400)
+        .json({ msg: "This email might not be registered." });
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
       return res.status(400).json({
-        msg: "Invalid Credentials",
+        msg: "Password is incorrect.",
       });
     jwt.sign(
       { id: user.id },
