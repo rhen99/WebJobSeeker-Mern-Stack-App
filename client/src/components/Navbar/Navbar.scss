@@ -1,0 +1,36 @@
+.navbar {
+  background-color: #fff;
+  &__logo {
+    position: relative;
+    padding: 1rem 0;
+    &__h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+  }
+  &__list {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 300ms;
+    &__item {
+      padding: 1rem 0;
+    }
+    &__link {
+      color: #333;
+      &:hover {
+        color: #00d11c;
+      }
+    }
+    &--open {
+      max-height: 100vh;
+      transition: max-height 300ms;
+    }
+  }
+  &__mobile__btn {
+    position: absolute;
+    right: 5%;
+    top: 39%;
+    font-size: 1.3rem;
+    cursor: pointer;
+  }
+}
