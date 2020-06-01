@@ -1,15 +1,15 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import "./bootstrap.min.css";
+import "./App.css";
 import Navbar from "./components/Navbar";
+import Showcase from "./components/Showcase";
 
 function App() {
   return (
-    <>
-      <Router>
-        <Navbar />
-      </Router>
-    </>
+    <Router>
+      <Navbar />
+      <Showcase />
+    </Router>
   );
 }
 
