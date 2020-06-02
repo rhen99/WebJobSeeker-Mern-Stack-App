@@ -5,7 +5,7 @@ function Navbar() {
     <>
       <div className="navbar bg-primary navbar-dark navbar-expand-lg sticky-top">
         <div className="container">
-          <Link className="navbar-brand" to="">
+          <Link className="navbar-brand" to="/">
             WebJobSeeker
           </Link>
           <button

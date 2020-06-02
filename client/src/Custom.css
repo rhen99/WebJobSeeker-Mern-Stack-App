@@ -20,5 +20,17 @@
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(51, 51, 51, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.footer {
+  background-color: #333;
+  color: #fff;
+}
+.push-footer {
+  min-height: calc(100vh - 162px);
+}
+@media (max-width: 1024px) {
+  .nav--custom {
+    display: none;
+  }
 }
