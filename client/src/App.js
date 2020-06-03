@@ -1,16 +1,22 @@
 import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Showcase from "./components/Showcase";
 import TopJobs from "./components/TopJobs";
 import Footer from "./components/Footer";
+import Register from "./components/Register";
 function App() {
   return (
     <Router>
       <Navbar />
-      <Showcase />
-      <TopJobs />
+      <Switch>
+        <Route path="/" exact>
+          <Showcase />
+          <TopJobs />
+        </Route>
+        <Route path="/register" component={Register} />
+      </Switch>
       <Footer />
     </Router>
   );

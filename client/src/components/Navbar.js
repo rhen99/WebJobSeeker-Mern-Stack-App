@@ -1,6 +1,17 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 function Navbar() {
+  const location = useLocation();
+  useEffect(() => {
+    const navItems = document.querySelectorAll(".nav__item");
+
+    navItems.forEach((navItem) => {
+      navItem.classList.remove("active");
+      if (navItem.dataset["to"] === location.pathname) {
+        navItem.classList.add("active");
+      }
+    });
+  }, [location.pathname]);
   return (
     <>
       <div className="navbar bg-primary navbar-dark navbar-expand-lg sticky-top">
@@ -21,30 +32,29 @@ function Navbar() {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
-              <li className="nav-item active">
-                <Link to="/" className="nav-link">
-                  <span className="sr-only">(current)</span>
+              <li className="nav-item nav__item" data-to="/">
+                <Link to="/" className="nav-link ">
                   Home
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link to="/about-us" className="nav-link">
+              <li className="nav-item nav__item" data-to="/about-us">
+                <Link to="/about-us" className="nav-link nav__link">
                   About Us
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link to="/how-it-works" className="nav-link">
+              <li className="nav-item nav__item" data-to="/how-it-works">
+                <Link to="/how-it-works" className="nav-link nav__link">
                   How It Works
                 </Link>
               </li>
             </ul>
             <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
+              <li className="nav-item nav__item" data-to="/login">
                 <Link to="/login" className="nav-link">
                   <i className="fas fa-user"></i> Login
                 </Link>
               </li>
-              <li className="nav-item">
+              <li className="nav-item nav__item" data-to="/register">
                 <Link to="/register" className="nav-link">
                   <i className="fas fa-user-plus"></i> Register
                 </Link>
