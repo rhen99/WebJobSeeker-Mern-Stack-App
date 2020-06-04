@@ -1,6 +1,6 @@
 import React from "react";
 
-function ApplicantRegister() {
+function EmployerRegister() {
   return (
     <form>
       <div className="form-row">
@@ -27,11 +27,11 @@ function ApplicantRegister() {
       </div>
       <input
         type="submit"
-        value="Register Applicant"
+        value="Employer Register"
         className="btn btn-primary"
       />
     </form>
   );
 }
 
-export default ApplicantRegister;
+export default EmployerRegister;

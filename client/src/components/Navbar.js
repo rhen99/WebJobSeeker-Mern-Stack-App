@@ -49,13 +49,13 @@ function Navbar() {
               </li>
             </ul>
             <ul className="navbar-nav ml-auto">
-              <li className="nav-item nav__item" data-to="/login">
-                <Link to="/login" className="nav-link">
+              <li className="nav-item nav__item" data-to="/login/applicant">
+                <Link to="/login/applicant" className="nav-link">
                   <i className="fas fa-user"></i> Login
                 </Link>
               </li>
-              <li className="nav-item nav__item" data-to="/register">
-                <Link to="/register" className="nav-link">
+              <li className="nav-item nav__item" data-to="/register/applicant">
+                <Link to="/register/applicant" className="nav-link">
                   <i className="fas fa-user-plus"></i> Register
                 </Link>
               </li>
