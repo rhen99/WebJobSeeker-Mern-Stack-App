@@ -7,6 +7,7 @@ import TopJobs from "./components/TopJobs";
 import Footer from "./components/Footer";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import About from "./components/About";
 function App() {
   return (
     <Router>
@@ -16,6 +17,7 @@ function App() {
           <Showcase />
           <TopJobs />
         </Route>
+        <Route path="/about-us" component={About} />
         <Route path="/register/:registerForm" component={Register} />
         <Route path="/login/:loginForm" component={Login} />
       </Switch>

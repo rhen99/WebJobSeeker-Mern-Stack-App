@@ -42,11 +42,6 @@ function Navbar() {
                   About Us
                 </Link>
               </li>
-              <li className="nav-item nav__item" data-to="/how-it-works">
-                <Link to="/how-it-works" className="nav-link nav__link">
-                  How It Works
-                </Link>
-              </li>
             </ul>
             <ul className="navbar-nav ml-auto">
               <li className="nav-item nav__item" data-to="/login/applicant">

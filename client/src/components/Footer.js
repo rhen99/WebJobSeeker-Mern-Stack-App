@@ -9,18 +9,13 @@ function Footer() {
         <div className="flex-grow-1 flex-shrink-1 nav--custom">
           <ul className="nav">
             <li className="nav-item">
-              <Link to="#" className="nav-link">
+              <Link to="/" className="nav-link">
                 Home
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="#">
+              <Link className="nav-link" to="/about-us">
                 About Us
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="#">
-                How It Works
               </Link>
             </li>
           </ul>
