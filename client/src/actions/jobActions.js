@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FETCH_JOBS, FETCH_ONE_JOB } from "./types";
+import { FETCH_JOBS } from "./types";
 
 export const fetchJobs = () => (dispatch) => {
   axios
