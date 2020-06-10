@@ -52,18 +52,4 @@ router.post("/", async (req, res) => {
   }
 });
 
-//@route GET api/applicant/auth/user
-//@desc Get user info.
-//@access Private
-
-router.get("/user", auth, async (req, res) => {
-  try {
-    const user = await Applicant.findById(req.user.id).select("-password");
-
-    res.json(user);
-  } catch (err) {
-    console.error(err);
-  }
-});
-
 module.exports = router;

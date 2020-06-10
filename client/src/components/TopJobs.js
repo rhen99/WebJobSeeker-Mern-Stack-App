@@ -13,7 +13,6 @@ function TopJobs() {
 
   return (
     <section className="top__jobs py-3 push-footer">
-      {console.log(jobs)}
       <div className="container">
         <h1>Top Paying Jobs</h1>
         <div className="row py-3">

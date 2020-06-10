@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { loadUser } from "./actions/authActions";
+import { useDispatch } from "react-redux";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Showcase from "./components/Showcase";
@@ -9,6 +11,10 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import About from "./components/About";
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch]);
   return (
     <Router>
       <Navbar />

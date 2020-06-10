@@ -5,5 +5,6 @@ const defineRoute = (app) => {
   app.use("/api/applicants/auth", require("../routes/api/applicants/auth"));
   app.use("/api/employers", require("../routes/api/employers/employers"));
   app.use("/api/employers/auth", require("../routes/api/employers/auth"));
+  app.use("/api/auth", require("../routes/api/user"));
 };
 module.exports = defineRoute;
