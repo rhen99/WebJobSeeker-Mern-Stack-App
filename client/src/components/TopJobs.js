@@ -2,14 +2,14 @@ import React, { useEffect } from "react";
 import "../Custom.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchJobs } from "../actions/jobActions";
+import { fetchTopJobs } from "../actions/jobActions";
 import numeral from "numeral";
 import moment from "moment";
 
 function TopJobs() {
   const dispatch = useDispatch();
   const jobs = useSelector((state) => state.jobCollection.jobs);
-  useEffect(() => dispatch(fetchJobs()), [dispatch]);
+  useEffect(() => dispatch(fetchTopJobs()), [dispatch]);
 
   return (
     <section className="top__jobs py-3 push-footer">

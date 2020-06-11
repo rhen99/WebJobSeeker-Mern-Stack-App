@@ -1,4 +1,4 @@
-import { FETCH_JOBS, FETCH_ONE_JOB } from "../actions/types";
+import { FETCH_JOBS, FETCH_ONE_JOB, FETCH_TOP_JOBS } from "../actions/types";
 
 const initialState = {
   jobs: [],
@@ -13,7 +13,15 @@ export default (state = initialState, action) => {
         jobs: action.payload,
       };
     case FETCH_ONE_JOB:
-      return {};
+      return {
+        ...state,
+        job: action.payload,
+      };
+    case FETCH_TOP_JOBS:
+      return {
+        ...state,
+        jobs: action.payload,
+      };
     default:
       return state;
   }

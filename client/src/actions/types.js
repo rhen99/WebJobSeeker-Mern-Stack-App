@@ -1,5 +1,6 @@
 export const FETCH_JOBS = "FETCH_JOBS";
 export const FETCH_ONE_JOB = "FETCH_ONE_JOB";
+export const FETCH_TOP_JOBS = "FETCH_TOP_JOBS";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";

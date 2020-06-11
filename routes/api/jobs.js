@@ -19,6 +19,22 @@ router.get("/", async (req, res) => {
     });
   }
 });
+
+// @route GET api/jobs/top_paying
+// @desc Get the 6 highest paying job in the database
+// @access Public
+
+router.get("/top_paying", async (req, res) => {
+  try {
+    const jobs = await Job.find().sort({ salary: -1 }).limit(6);
+    res.json(jobs);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      msg: "Server Error",
+    });
+  }
+});
 // @route GET api/jobs/search
 // @desc Search Jobs
 // @access Private
