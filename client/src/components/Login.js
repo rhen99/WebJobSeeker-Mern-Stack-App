@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import ApplicantLogin from "./ApplicantLogin";
 import EmployerLogin from "./EmployerLogin";
+import { renderElem } from "../helpers";
 function Login() {
   const [formState, setFormState] = useState();
   const { loginForm } = useParams();
@@ -12,16 +13,6 @@ function Login() {
         : "applicant"
     );
   }, [loginForm]);
-  const renderElem = (applicant, employer) => {
-    switch (formState) {
-      case "applicant":
-        return applicant;
-      case "employer":
-        return employer;
-      default:
-        return null;
-    }
-  };
   return (
     <div className="container push-footer mt-5">
       <div className="row justify-content-md-center">
@@ -31,7 +22,11 @@ function Login() {
               <ul className="nav nav-pills nav-fill">
                 <li className="nav-item">
                   <Link
-                    className={renderElem("nav-link active", "nav-link")}
+                    className={renderElem(
+                      formState,
+                      "nav-link active",
+                      "nav-link"
+                    )}
                     to="applicant"
                   >
                     Applicant Login
@@ -39,7 +34,11 @@ function Login() {
                 </li>
                 <li className="nav-item">
                   <Link
-                    className={renderElem("nav-link", "nav-link active")}
+                    className={renderElem(
+                      formState,
+                      "nav-link",
+                      "nav-link active"
+                    )}
                     to="employer"
                   >
                     Employer Login
@@ -51,6 +50,7 @@ function Login() {
               <h5 className="card-title">
                 Login as{" "}
                 {renderElem(
+                  formState,
                   <span className="text-success font-weight-bold">
                     Applicant
                   </span>,
@@ -59,12 +59,16 @@ function Login() {
                   </span>
                 )}
               </h5>
-              {renderElem(<ApplicantLogin />, <EmployerLogin />)}
+              {renderElem(formState, <ApplicantLogin />, <EmployerLogin />)}
             </div>
             <div className="card-footer">
               Don't have an account?{" "}
               <Link
-                to={renderElem("/register/applicant", "/register/employer")}
+                to={renderElem(
+                  formState,
+                  "/register/applicant",
+                  "/register/employer"
+                )}
               >
                 Register Now
               </Link>

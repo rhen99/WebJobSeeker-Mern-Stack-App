@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import ApplicantRegister from "./ApplicantRegister";
 import "../Custom.css";
 import EmployerRegister from "./EmployerRegister";
+import { renderElem } from "../helpers";
 
 function Register() {
   const { registerForm } = useParams("applicant");
@@ -14,16 +15,7 @@ function Register() {
         : "applicant"
     );
   }, [registerForm]);
-  const renderElem = (applicant, employer) => {
-    switch (formState) {
-      case "applicant":
-        return applicant;
-      case "employer":
-        return employer;
-      default:
-        return null;
-    }
-  };
+
   return (
     <div className="container push-footer mt-5">
       <div className="row justify-content-md-center">
@@ -34,7 +26,11 @@ function Register() {
                 <li className="nav-item">
                   <Link
                     to="applicant"
-                    className={renderElem("nav-link active", "nav-link")}
+                    className={renderElem(
+                      formState,
+                      "nav-link active",
+                      "nav-link"
+                    )}
                   >
                     Register As Applicant
                   </Link>
@@ -42,7 +38,11 @@ function Register() {
                 <li className="nav-item">
                   <Link
                     to="employer"
-                    className={renderElem("nav-link", "nav-link active")}
+                    className={renderElem(
+                      formState,
+                      "nav-link",
+                      "nav-link active"
+                    )}
                   >
                     Register As Employer
                   </Link>
@@ -53,6 +53,7 @@ function Register() {
               <h5 className="card-title">
                 Register as{" "}
                 {renderElem(
+                  formState,
                   <span className="text-success font-weight-bold">
                     Applicant
                   </span>,
@@ -61,7 +62,11 @@ function Register() {
                   </span>
                 )}
               </h5>
-              {renderElem(<ApplicantRegister />, <EmployerRegister />)}
+              {renderElem(
+                formState,
+                <ApplicantRegister />,
+                <EmployerRegister />
+              )}
             </div>
           </div>
         </div>

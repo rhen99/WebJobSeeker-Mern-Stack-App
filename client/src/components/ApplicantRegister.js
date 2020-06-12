@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { registerApplicant } from "../actions/authActions";
 import { clearErrors } from "../actions/errorActions";
+import { checkForErrors } from "../helpers";
+
 function ApplicantRegister() {
   const [newUser, setNewUser] = useState({
     firstname: "",
@@ -14,28 +16,22 @@ function ApplicantRegister() {
 
   const errors = useSelector((state) => state.errors);
 
-  const checkForErrors = (err, noErrors = null) => {
-    return errors.id === "REGISTER_FAIL" ? err : noErrors;
-  };
-
   const dispatch = useDispatch();
 
   const onSubmit = (e) => {
     e.preventDefault();
-
+    dispatch(clearErrors());
     dispatch(registerApplicant(newUser));
   };
   const alert = checkForErrors(
+    errors.id,
     <div className="alert alert-danger">{error}</div>
   );
   const onChange = (e) => {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
   };
   useEffect(() => {
-    setError(checkForErrors(errors.msg.msg));
-    return () => {
-      dispatch(clearErrors);
-    };
+    setError(checkForErrors(errors.id, errors.msg.msg));
   }, [errors]);
   return (
     <form onSubmit={onSubmit}>

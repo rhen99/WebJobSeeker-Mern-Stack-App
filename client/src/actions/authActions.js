@@ -4,24 +4,28 @@ import {
   AUTH_ERROR,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  LOGOUT_SUCCESS,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
 } from "./types";
 import { returnErrors } from "./errorActions";
-export const tokenConfig = (getState) => {
-  const token = getState().auth.token;
+export const tokenConfig = () => {
+  const token = localStorage.getItem("token");
 
   const config = {
     headers: {
       "Content-type": "application/json",
     },
   };
+
   if (token) {
     config.headers["x-auth-token"] = token;
   }
   return config;
 };
-export const loadUser = () => (dispatch, getState) => {
+export const loadUser = () => (dispatch) => {
   axios
-    .get("/api/auth/user", tokenConfig(getState))
+    .get("/api/auth/user", tokenConfig())
     .then((res) => {
       dispatch({
         type: LOAD_USER,
@@ -72,4 +76,35 @@ export const registerApplicant = ({
         type: REGISTER_FAIL,
       });
     });
+};
+
+export const applicantLogin = ({ email, password }) => (dispatch) => {
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+    },
+  };
+  const body = JSON.stringify({ email, password });
+
+  axios
+    .post("/api/applicants/auth/", body, config)
+    .then((res) =>
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      })
+    )
+    .catch((err) => {
+      dispatch(
+        returnErrors(err.response.data, err.response.status, "LOGIN_FAIL")
+      );
+      dispatch({
+        type: LOGIN_FAIL,
+      });
+    });
+};
+export const logout = () => {
+  return {
+    type: LOGOUT_SUCCESS,
+  };
 };

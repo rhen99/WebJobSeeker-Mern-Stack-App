@@ -18,8 +18,12 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
+      localStorage.setItem("token", action.payload.token);
+      localStorage.setItem("role", action.payload.user.role);
+      localStorage.setItem("isAuthenticated", action.payload.isAuthentiacated);
       return {
         ...state,
+        ...action.payload,
         isAuthentiacated: true,
       };
     case LOAD_USER:
@@ -33,6 +37,8 @@ export default (state = initialState, action) => {
     case REGISTER_FAIL:
     case LOGIN_FAIL:
       localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      localStorage.removeItem("isAuthenticated");
       return {
         ...state,
         token: null,

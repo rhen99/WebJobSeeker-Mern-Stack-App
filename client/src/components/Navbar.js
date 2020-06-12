@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { logout } from "../actions/authActions";
+import { useDispatch } from "react-redux";
 function Navbar() {
   const location = useLocation();
   useEffect(() => {
@@ -12,6 +14,12 @@ function Navbar() {
       }
     });
   }, [location.pathname]);
+  const dispatch = useDispatch();
+
+  const logoutFn = (e) => {
+    e.preventDefault();
+    dispatch(logout());
+  };
   return (
     <>
       <div className="navbar bg-primary navbar-dark navbar-expand-lg sticky-top">
@@ -52,6 +60,11 @@ function Navbar() {
               <li className="nav-item nav__item" data-to="/register/applicant">
                 <Link to="/register/applicant" className="nav-link">
                   <i className="fas fa-user-plus"></i> Register
+                </Link>
+              </li>
+              <li className="nav-item nav__item">
+                <Link to="#" className="nav-link" onClick={logoutFn}>
+                  <i className="fas fa-sign-out-alt"></i> Logout
                 </Link>
               </li>
             </ul>
