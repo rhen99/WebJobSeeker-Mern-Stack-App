@@ -13,3 +13,6 @@ export const renderElem = (current, applicant, employer) => {
       return null;
   }
 };
+export const isAuth = (isAuth, notAuth) => {
+  return localStorage.getItem("token") ? isAuth : notAuth;
+};

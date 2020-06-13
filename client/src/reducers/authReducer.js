@@ -9,7 +9,7 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  isAuthentiacated: false,
+  isAuthenticated: false,
   user: null,
   token: localStorage.getItem("token"),
 };
@@ -20,16 +20,15 @@ export default (state = initialState, action) => {
     case REGISTER_SUCCESS:
       localStorage.setItem("token", action.payload.token);
       localStorage.setItem("role", action.payload.user.role);
-      localStorage.setItem("isAuthenticated", action.payload.isAuthentiacated);
       return {
         ...state,
         ...action.payload,
-        isAuthentiacated: true,
+        isAuthenticated: true,
       };
     case LOAD_USER:
       return {
         ...state,
-        isAuthentiacated: true,
+        isAuthenticated: true,
         user: action.payload,
       };
     case LOGOUT_SUCCESS:
@@ -38,11 +37,10 @@ export default (state = initialState, action) => {
     case LOGIN_FAIL:
       localStorage.removeItem("token");
       localStorage.removeItem("role");
-      localStorage.removeItem("isAuthenticated");
       return {
         ...state,
         token: null,
-        isAuthentiacated: null,
+        isAuthenticated: null,
         user: null,
       };
 

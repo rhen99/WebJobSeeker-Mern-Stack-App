@@ -11,11 +11,11 @@ const config = require("config");
 // @access Public
 
 router.post("/register", async (req, res) => {
-  const { firstname, lastname, email, password } = req.body;
+  const { firstname, lastname, email, password, password_confirm } = req.body;
 
   const emailRegex = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi;
   const nameRegex = /^([A-Z][a-z]+([ ]?[a-z]?['-]?[A-Z][a-z]+)*)$/;
-  if (!firstname || !lastname || !email || !password)
+  if (!firstname || !lastname || !email || !password || !password_confirm)
     return res.status(400).json({
       msg: "Please fill in all required fields.",
     });
@@ -30,6 +30,8 @@ router.post("/register", async (req, res) => {
     return res
       .status(400)
       .json({ msg: "Password must be at least 8 characters" });
+  if (password !== password_confirm)
+    return res.status(400).json({ msg: "Password doesn't match" });
   try {
     const applicant = await Applicant.findOne({ email });
     if (applicant)

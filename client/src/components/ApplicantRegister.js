@@ -14,8 +14,6 @@ function ApplicantRegister() {
   });
   const [error, setError] = useState("");
 
-  const errors = useSelector((state) => state.errors);
-
   const dispatch = useDispatch();
 
   const onSubmit = (e) => {
@@ -23,6 +21,9 @@ function ApplicantRegister() {
     dispatch(clearErrors());
     dispatch(registerApplicant(newUser));
   };
+
+  const errors = useSelector((state) => state.errors);
+
   const alert = checkForErrors(
     errors.id,
     <div className="alert alert-danger">{error}</div>
@@ -30,6 +31,7 @@ function ApplicantRegister() {
   const onChange = (e) => {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
   };
+
   useEffect(() => {
     setError(checkForErrors(errors.id, errors.msg.msg));
   }, [errors]);

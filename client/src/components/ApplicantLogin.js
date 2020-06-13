@@ -7,9 +7,6 @@ import { clearErrors } from "../actions/errorActions";
 function ApplicantLogin() {
   const dispatch = useDispatch();
 
-  const errors = useSelector((state) => state.errors);
-  const auth = useSelector((state) => state.auth);
-
   const [error, setError] = useState("");
 
   const [newUser, setNewUser] = useState({
@@ -25,6 +22,8 @@ function ApplicantLogin() {
   const onChange = (e) => {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
   };
+
+  const errors = useSelector((state) => state.errors);
 
   useEffect(() => {
     setError(checkForErrors(errors.id, errors.msg.msg));
