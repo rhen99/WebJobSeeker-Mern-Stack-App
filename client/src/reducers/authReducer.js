@@ -18,8 +18,10 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
+      const user = JSON.stringify(action.payload.user);
+      localStorage.setItem("user", user);
       localStorage.setItem("token", action.payload.token);
-      localStorage.setItem("role", action.payload.user.role);
+
       return {
         ...state,
         ...action.payload,
@@ -36,7 +38,7 @@ export default (state = initialState, action) => {
     case REGISTER_FAIL:
     case LOGIN_FAIL:
       localStorage.removeItem("token");
-      localStorage.removeItem("role");
+      localStorage.removeItem("user");
       return {
         ...state,
         token: null,

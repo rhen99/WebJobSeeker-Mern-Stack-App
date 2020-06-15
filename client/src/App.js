@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { GuestRoute, ProtectedRoute } from "./components/Route";
 import { loadUser } from "./actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,11 +24,11 @@ function App() {
       <Navbar />
       <Switch>
         <GuestRoute path="/" exact component={Homepage} />
-        <GuestRoute path="/about-us" component={About} />
+        <Route path="/about-us" component={About} />
         <GuestRoute path="/register/:registerForm" component={Register} />
         <GuestRoute path="/login/:loginForm" component={Login} />
         <ProtectedRoute path="/dashboard" component={Dashboard} />
-        <ProtectedRoute path="/job-listings" component={JobListing} />
+        <ProtectedRoute path="/jobs" component={JobListing} />
       </Switch>
       <Footer />
     </Router>

@@ -56,11 +56,7 @@ function ApplicantLogin() {
           className="form-control"
         />
       </div>
-      <input
-        type="submit"
-        value="Applicant Login"
-        className="btn btn-primary"
-      />
+      <input type="submit" value="Log In" className="btn btn-primary" />
     </form>
   );
 }

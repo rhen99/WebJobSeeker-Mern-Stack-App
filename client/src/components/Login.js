@@ -29,7 +29,7 @@ function Login() {
                     )}
                     to="applicant"
                   >
-                    Applicant Login
+                    Applicant Log In
                   </Link>
                 </li>
                 <li className="nav-item">
@@ -41,14 +41,14 @@ function Login() {
                     )}
                     to="employer"
                   >
-                    Employer Login
+                    Employer Log In
                   </Link>
                 </li>
               </ul>
             </div>
             <div className="card-body">
               <h5 className="card-title">
-                Login as{" "}
+                Log In as{" "}
                 {renderElem(
                   formState,
                   <span className="text-success font-weight-bold">

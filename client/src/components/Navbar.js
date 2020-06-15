@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { isAuth } from "../helpers";
 function Navbar() {
   const location = useLocation();
+
   useEffect(() => {
     const navItems = document.querySelectorAll(".nav__item");
 
@@ -24,25 +25,60 @@ function Navbar() {
 
   const dynamicLinks = {
     notLoggedIn: (
-      <>
-        <li className="nav-item nav__item" data-to="/login/applicant">
-          <Link to="/login/applicant" className="nav-link">
-            <i className="fas fa-user"></i> Login
-          </Link>
-        </li>
-        <li className="nav-item nav__item" data-to="/register/applicant">
-          <Link to="/register/applicant" className="nav-link">
-            <i className="fas fa-user-plus"></i> Register
-          </Link>
-        </li>
-      </>
+      <div className="collapse navbar-collapse" id="navbarNav">
+        <ul className="navbar-nav">
+          <li className="nav-item nav__item" data-to="/">
+            <Link to="/" className="nav-link ">
+              Home
+            </Link>
+          </li>
+          <li className="nav-item nav__item" data-to="/about-us">
+            <Link to="/about-us" className="nav-link nav__link">
+              About Us
+            </Link>
+          </li>
+        </ul>
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item nav__item" data-to="/login/applicant">
+            <Link to="/login/applicant" className="nav-link">
+              <i className="fas fa-user"></i> Log In
+            </Link>
+          </li>
+          <li className="nav-item nav__item" data-to="/register/applicant">
+            <Link to="/register/applicant" className="nav-link">
+              <i className="fas fa-user-plus"></i> Register
+            </Link>
+          </li>
+        </ul>
+      </div>
     ),
     isLoggedIn: (
-      <li className="nav-item nav__item">
-        <Link to="#" className="nav-link" onClick={logoutFn}>
-          <i className="fas fa-sign-out-alt"></i> Logout
-        </Link>
-      </li>
+      <div className="collapse navbar-collapse" id="navbarNav">
+        <ul className="navbar-nav">
+          <li className="nav-item nav__item" data-to="/jobs">
+            <Link to="/jobs" className="nav-link ">
+              Home
+            </Link>
+          </li>
+          <li className="nav-item nav__item" data-to="/about-us">
+            <Link to="/about-us" className="nav-link ">
+              About Us
+            </Link>
+          </li>
+        </ul>
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item nav__item" data-to="/dashboard">
+            <Link to="/dashboard" className="nav-link">
+              Dashboard
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="#" className="nav-link" onClick={logoutFn}>
+              <i className="fas fa-sign-out-alt"></i> Log Out
+            </Link>
+          </li>
+        </ul>
+      </div>
     ),
   };
 
@@ -64,26 +100,7 @@ function Navbar() {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
-              <li
-                className="nav-item nav__item"
-                data-to={isAuth("/job-list", "/")}
-              >
-                <Link to="/" className="nav-link ">
-                  Home
-                </Link>
-              </li>
-              <li className="nav-item nav__item" data-to="/about-us">
-                <Link to="/about-us" className="nav-link nav__link">
-                  About Us
-                </Link>
-              </li>
-            </ul>
-            <ul className="navbar-nav ml-auto">
-              {isAuth(dynamicLinks.isLoggedIn, dynamicLinks.notLoggedIn)}
-            </ul>
-          </div>
+          {isAuth(dynamicLinks.isLoggedIn, dynamicLinks.notLoggedIn)}
         </div>
       </div>
     </>
