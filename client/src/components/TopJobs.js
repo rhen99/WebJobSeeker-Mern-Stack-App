@@ -20,21 +20,19 @@ function TopJobs() {
             <div className="col-lg-4 col-md-6 pb-2" key={job._id}>
               <div className="card">
                 <div className="card-body">
-                  <h5 className="card-title">{job.title}</h5>
-                  <h6 className="card-subtitle mb-2 text-muted">
-                    {job.company_name}
-                  </h6>
-                  <p className="card-text">
-                    <span className="text-muted">Salary: </span>{" "}
-                    <span className="font-weight-bold">
-                      {job.currency}
-                      {numeral(job.salary).format("0,0")}
-                    </span>{" "}
-                    Posted {moment(job.created_at).startOf("day").fromNow()}
-                  </p>
-                  <Link className="btn btn-primary" to="#">
-                    View Job
+                  <Link to="#">
+                    <h5 className="card-title">{job.title}</h5>
                   </Link>
+                  <p>
+                    <span className="text-muted">{job.company_name}</span> -{" "}
+                    <span className="text-success font-weight-bold">
+                      {job.currency} {numeral(job.salary).format("0a")}
+                    </span>{" "}
+                    Posted{" "}
+                    <span className="text-warning font-weight-bold">
+                      {moment(job.created_at).startOf("day").fromNow()}
+                    </span>
+                  </p>
                 </div>
               </div>
             </div>

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { logout } from "../actions/authActions";
 import { useDispatch } from "react-redux";
-import { isAuth } from "../helpers";
+import { isAuth, isEmployer } from "../helpers";
 function Navbar() {
   const location = useLocation();
 
@@ -72,6 +72,13 @@ function Navbar() {
               Dashboard
             </Link>
           </li>
+          {isEmployer(
+            <li className="nav-item nav__item" data-to="/editor">
+              <Link to="/editor" className="nav-link ">
+                Create a Job
+              </Link>
+            </li>
+          )}
           <li className="nav-item">
             <Link to="#" className="nav-link" onClick={logoutFn}>
               <i className="fas fa-sign-out-alt"></i> Log Out

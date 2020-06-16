@@ -3,7 +3,7 @@ import React from "react";
 function Dashboard() {
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const { firstname, lastname, role, email, id } = user;
+  const { firstname, lastname, role } = user;
 
   switch (role) {
     case "applicant":

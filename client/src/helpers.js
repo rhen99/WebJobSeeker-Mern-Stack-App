@@ -16,3 +16,6 @@ export const renderElem = (current, applicant, employer) => {
 export const isAuth = (isAuth, notAuth) => {
   return localStorage.getItem("token") ? isAuth : notAuth;
 };
+export const isEmployer = (employer, applicant = "") => {
+  return localStorage.getItem("role") === "employer" ? employer : applicant;
+};

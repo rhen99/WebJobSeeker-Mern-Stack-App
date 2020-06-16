@@ -12,6 +12,7 @@ import About from "./components/About";
 import Homepage from "./components/Homepage";
 import Dashboard from "./components/Dashboard";
 import JobListing from "./components/JobListing";
+import Editor from "./components/Editor";
 function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
@@ -29,6 +30,7 @@ function App() {
         <GuestRoute path="/login/:loginForm" component={Login} />
         <ProtectedRoute path="/dashboard" component={Dashboard} />
         <ProtectedRoute path="/jobs" component={JobListing} />
+        <ProtectedRoute path="/editor" component={Editor} />
       </Switch>
       <Footer />
     </Router>

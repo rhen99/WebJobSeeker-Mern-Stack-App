@@ -21,6 +21,7 @@ export default (state = initialState, action) => {
       const user = JSON.stringify(action.payload.user);
       localStorage.setItem("user", user);
       localStorage.setItem("token", action.payload.token);
+      localStorage.setItem("role", action.payload.user.role);
 
       return {
         ...state,
@@ -39,6 +40,7 @@ export default (state = initialState, action) => {
     case LOGIN_FAIL:
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+      localStorage.removeItem("role");
       return {
         ...state,
         token: null,
