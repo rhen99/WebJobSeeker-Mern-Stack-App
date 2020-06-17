@@ -1,5 +1,7 @@
 export const checkForErrors = (type, hasErrors, noErrors = null) => {
-  return type === "REGISTER_FAIL" || type === "LOGIN_FAIL"
+  return type === "REGISTER_FAIL" ||
+    type === "LOGIN_FAIL" ||
+    type === "JOB_FAIL"
     ? hasErrors
     : noErrors;
 };
@@ -18,4 +20,18 @@ export const isAuth = (isAuth, notAuth) => {
 };
 export const isEmployer = (employer, applicant = "") => {
   return localStorage.getItem("role") === "employer" ? employer : applicant;
+};
+export const tokenConfig = () => {
+  const token = localStorage.getItem("token");
+
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+    },
+  };
+
+  if (token) {
+    config.headers["x-auth-token"] = token;
+  }
+  return config;
 };

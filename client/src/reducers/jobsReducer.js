@@ -1,8 +1,17 @@
-import { FETCH_JOBS, FETCH_ONE_JOB, FETCH_TOP_JOBS } from "../actions/types";
+import {
+  FETCH_JOBS,
+  FETCH_ONE_JOB,
+  FETCH_TOP_JOBS,
+  ADD_JOB,
+  EDIT_JOB,
+  UPDATE_JOB,
+  DELETE_JOB,
+} from "../actions/types";
 
 const initialState = {
   jobs: [],
   job: {},
+  isEdit: false,
 };
 
 export default (state = initialState, action) => {
@@ -21,6 +30,22 @@ export default (state = initialState, action) => {
       return {
         ...state,
         jobs: action.payload,
+      };
+    case ADD_JOB:
+    case UPDATE_JOB:
+      return {
+        ...state,
+        jobs: [action.payload, ...state.jobs],
+      };
+    case EDIT_JOB:
+      return {
+        ...state,
+        isEdit: true,
+      };
+    case DELETE_JOB:
+      return {
+        ...state,
+        jobs: state.jobs.filter((job) => job._id !== action.payload),
       };
     default:
       return state;

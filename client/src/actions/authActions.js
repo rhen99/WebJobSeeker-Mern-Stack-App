@@ -9,20 +9,7 @@ import {
   LOGIN_FAIL,
 } from "./types";
 import { returnErrors } from "./errorActions";
-export const tokenConfig = () => {
-  const token = localStorage.getItem("token");
-
-  const config = {
-    headers: {
-      "Content-type": "application/json",
-    },
-  };
-
-  if (token) {
-    config.headers["x-auth-token"] = token;
-  }
-  return config;
-};
+import { tokenConfig } from "../helpers";
 export const loadUser = () => (dispatch) => {
   axios
     .get("/api/auth/user", tokenConfig())
