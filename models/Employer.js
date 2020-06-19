@@ -27,6 +27,10 @@ const employerSchema = new mongoose.Schema(
       type: String,
       default: "employer",
     },
+    company: {
+      type: String,
+      required: true,
+    },
     register_date: {
       type: Date,
       default: Date.now(),

@@ -68,6 +68,7 @@ export const registerEmployer = ({
   firstname,
   lastname,
   email,
+  company,
   password,
   password_confirm,
 }) => (dispatch) => {
@@ -81,6 +82,7 @@ export const registerEmployer = ({
     firstname,
     lastname,
     email,
+    company,
     password,
     password_confirm,
   });

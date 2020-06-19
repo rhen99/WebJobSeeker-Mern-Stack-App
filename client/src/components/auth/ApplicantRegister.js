@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { registerEmployer } from "../actions/authActions";
-import { clearErrors } from "../actions/errorActions";
-import { checkForErrors } from "../helpers";
+import { registerApplicant } from "../../actions/authActions";
+import { clearErrors } from "../../actions/errorActions";
+import { checkForErrors } from "../../helpers";
 
-function EmployerRegister() {
+function ApplicantRegister() {
   const [newUser, setNewUser] = useState({
     firstname: "",
     lastname: "",
@@ -12,7 +12,6 @@ function EmployerRegister() {
     password: "",
     password_confirm: "",
   });
-
   const [error, setError] = useState("");
 
   const dispatch = useDispatch();
@@ -20,7 +19,7 @@ function EmployerRegister() {
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(clearErrors());
-    dispatch(registerEmployer(newUser));
+    dispatch(registerApplicant(newUser));
   };
 
   const errors = useSelector((state) => state.errors);
@@ -36,7 +35,6 @@ function EmployerRegister() {
   useEffect(() => {
     setError(checkForErrors(errors.id, errors.msg.msg));
   }, [errors]);
-
   return (
     <form onSubmit={onSubmit}>
       {alert}
@@ -94,11 +92,11 @@ function EmployerRegister() {
       </div>
       <input
         type="submit"
-        value="Register Employer"
+        value="Register Applicant"
         className="btn btn-primary"
       />
     </form>
   );
 }
 
-export default EmployerRegister;
+export default ApplicantRegister;

@@ -1,7 +1,7 @@
 import {
   FETCH_JOBS,
   FETCH_ONE_JOB,
-  FETCH_TOP_JOBS,
+  FETCH_RECENT_JOBS,
   ADD_JOB,
   EDIT_JOB,
   UPDATE_JOB,
@@ -26,7 +26,7 @@ export default (state = initialState, action) => {
         ...state,
         job: action.payload,
       };
-    case FETCH_TOP_JOBS:
+    case FETCH_RECENT_JOBS:
       return {
         ...state,
         jobs: action.payload,

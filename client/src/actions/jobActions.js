@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FETCH_JOBS, FETCH_TOP_JOBS, FETCH_ONE_JOB, ADD_JOB } from "./types";
+import { FETCH_JOBS, FETCH_RECENT_JOBS, FETCH_ONE_JOB, ADD_JOB } from "./types";
 import { returnErrors } from "./errorActions";
 import { tokenConfig } from "../helpers";
 
@@ -16,12 +16,12 @@ export const fetchJobs = () => (dispatch) => {
       dispatch(returnErrors(err.response.msg, err.response.status));
     });
 };
-export const fetchTopJobs = () => (dispatch) => {
+export const fetchRecentJobs = () => (dispatch) => {
   axios
-    .get("/api/jobs/top_paying")
+    .get("/api/jobs/recent")
     .then((res) => {
       dispatch({
-        type: FETCH_TOP_JOBS,
+        type: FETCH_RECENT_JOBS,
         payload: res.data,
       });
     })

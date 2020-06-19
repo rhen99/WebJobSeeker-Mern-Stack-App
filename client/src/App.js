@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { GuestRoute, ProtectedRoute } from "./components/Route";
+import { GuestRoute, ProtectedRoute } from "./components/layouts/Route";
 import { loadUser } from "./actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import Register from "./components/Register";
-import Login from "./components/Login";
-import About from "./components/About";
-import Homepage from "./components/Homepage";
-import Dashboard from "./components/Dashboard";
-import JobListing from "./components/JobListing";
-import JobEditor from "./components/JobEditor";
+import Navbar from "./components/layouts/Navbar";
+import Footer from "./components/layouts/Footer";
+import Register from "./components/auth/Register";
+import Login from "./components/auth/Login";
+import About from "./components/layouts/About";
+import Homepage from "./components/layouts/Homepage";
+import Dashboard from "./components/auth/Dashboard";
+import JobListing from "./components/jobs/JobListing";
+import JobEditor from "./components/jobs/JobEditor";
 function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);

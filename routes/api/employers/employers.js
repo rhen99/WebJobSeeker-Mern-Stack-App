@@ -11,11 +11,25 @@ const config = require("config");
 // @access Public
 
 router.post("/register", async (req, res) => {
-  const { firstname, lastname, email, password, password_confirm } = req.body;
+  const {
+    firstname,
+    lastname,
+    email,
+    company,
+    password,
+    password_confirm,
+  } = req.body;
 
   const emailRegex = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi;
   const nameRegex = /^([A-Z][a-z]+([ ]?[a-z]?['-]?[A-Z][a-z]+)*)$/;
-  if (!firstname || !lastname || !email || !password || !password_confirm)
+  if (
+    !firstname ||
+    !lastname ||
+    !company ||
+    !email ||
+    !password ||
+    !password_confirm
+  )
     return res.status(400).json({
       msg: "Please fill in all required fields.",
     });
@@ -48,6 +62,7 @@ router.post("/register", async (req, res) => {
       lastname,
       email,
       password,
+      company,
     });
     bcrypt.genSalt(10, (err, salt) => {
       if (err) throw err;
@@ -56,6 +71,7 @@ router.post("/register", async (req, res) => {
         try {
           newUser.password = hash;
           await newUser.save();
+          console.log(newUser);
 
           jwt.sign(
             { id: newUser.id },
@@ -71,6 +87,7 @@ router.post("/register", async (req, res) => {
                   lastname: newUser.lastname,
                   email: newUser.email,
                   role: newUser.role,
+                  company: newUser.company,
                 },
               });
             }

@@ -20,13 +20,13 @@ router.get("/", async (req, res) => {
   }
 });
 
-// @route GET api/jobs/top_paying
-// @desc Get the 6 highest paying job in the database
+// @route GET api/jobs/recent
+// @desc Get the 6 recent jobs in the database
 // @access Public
 
-router.get("/top_paying", async (req, res) => {
+router.get("/recent", async (req, res) => {
   try {
-    const jobs = await Job.find().sort({ salary: -1 }).limit(6);
+    const jobs = await Job.find().sort({ created_at: -1 }).limit(6);
     res.json(jobs);
   } catch (err) {
     console.error(err);
@@ -80,9 +80,17 @@ router.get("/:id", auth, async (req, res) => {
 // @access Private
 
 router.post("/create", auth, async (req, res) => {
-  const { title, company_name, salary, currency, description } = req.body;
+  const {
+    title,
+    company_name,
+    salary_type,
+    job_type,
+    salary,
+    currency,
+    description,
+  } = req.body;
   const keywords = title.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
-  if (!title || !company_name || !description)
+  if (!title || !company_name || !description || !salary_type || !job_type)
     return res.status(400).json({ msg: "Please fill in all required fields." });
 
   try {
@@ -90,15 +98,20 @@ router.post("/create", auth, async (req, res) => {
     if (!user) return res.status(403).json({ msg: "Forbidden access." });
     const newJob = new Job({
       title,
-      company_name,
+      company_name: user.company,
       salary,
+      salary_type,
+      job_type,
       currency,
       description,
       employer_id: req.user.id,
       keywords,
     });
     await newJob.save();
-    res.json(newJob);
+    res.json({
+      msg: "Job Created Successfully",
+      new_job: newJob,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json("Server Error");

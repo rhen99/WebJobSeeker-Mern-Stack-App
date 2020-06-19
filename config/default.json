@@ -1,4 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://rhen99:0dRGybQAzFeoFgHV@webjobseeker-jcmvz.mongodb.net/test?retryWrites=true&w=majority",
+  "mongoURI": "mongodb+srv://rhen99:0dRGybQAzFeoFgHV@webjobseeker-jcmvz.mongodb.net/webjobseeker?retryWrites=true&w=majority",
   "jwtSecret": "wjs_secret"
 }

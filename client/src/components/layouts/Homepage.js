@@ -1,6 +1,6 @@
 import React from "react";
 import Showcase from "./Showcase";
-import TopJobs from "./TopJobs";
+import TopJobs from "./RecentJobs";
 
 function Homepage() {
   return (

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { checkForErrors } from "../helpers";
-import { applicantLogin } from "../actions/authActions";
-import { clearErrors } from "../actions/errorActions";
+import { checkForErrors } from "../../helpers";
+import { applicantLogin } from "../../actions/authActions";
+import { clearErrors } from "../../actions/errorActions";
 
 function ApplicantLogin() {
   const dispatch = useDispatch();

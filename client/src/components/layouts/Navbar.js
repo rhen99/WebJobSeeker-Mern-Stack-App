@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { logout } from "../actions/authActions";
+import { logout } from "../../actions/authActions";
 import { useDispatch } from "react-redux";
-import { isAuth, isEmployer } from "../helpers";
+import { isAuth, isEmployer } from "../../helpers";
 function Navbar() {
   const location = useLocation();
 

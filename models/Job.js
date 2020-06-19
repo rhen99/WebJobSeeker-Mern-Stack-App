@@ -14,7 +14,14 @@ const jobSchema = new mongoose.Schema(
       default: "Negotiate",
     },
     currency: String,
-
+    salary_type: {
+      type: String,
+      required: true,
+    },
+    job_type: {
+      type: String,
+      required: true,
+    },
     description: {
       type: String,
       required: true,

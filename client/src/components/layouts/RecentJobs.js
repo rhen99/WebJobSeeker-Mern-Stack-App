@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
-import "../Custom.css";
+import "../../Custom.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchTopJobs } from "../actions/jobActions";
+import { fetchRecentJobs } from "../../actions/jobActions";
 import numeral from "numeral";
 import moment from "moment";
 
-function TopJobs() {
+function RecentJobs() {
   const dispatch = useDispatch();
   const jobs = useSelector((state) => state.jobCollection.jobs);
-  useEffect(() => dispatch(fetchTopJobs()), [dispatch]);
+  useEffect(() => dispatch(fetchRecentJobs()), [dispatch]);
 
   return (
     <section className="top__jobs py-3 push-footer">
       <div className="container">
-        <h1>Top Paying Jobs</h1>
+        <h1>Recent Jobs</h1>
         <div className="row py-3">
           {jobs.map((job) => (
             <div className="col-lg-4 col-md-6 pb-2" key={job._id}>
@@ -43,4 +43,4 @@ function TopJobs() {
   );
 }
 
-export default TopJobs;
+export default RecentJobs;

@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { registerApplicant } from "../actions/authActions";
-import { clearErrors } from "../actions/errorActions";
-import { checkForErrors } from "../helpers";
+import { registerEmployer } from "../../actions/authActions";
+import { clearErrors } from "../../actions/errorActions";
+import { checkForErrors } from "../../helpers";
 
-function ApplicantRegister() {
+function EmployerRegister() {
   const [newUser, setNewUser] = useState({
     firstname: "",
     lastname: "",
     email: "",
+    company: "",
     password: "",
     password_confirm: "",
   });
+
   const [error, setError] = useState("");
 
   const dispatch = useDispatch();
@@ -19,7 +21,7 @@ function ApplicantRegister() {
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(clearErrors());
-    dispatch(registerApplicant(newUser));
+    dispatch(registerEmployer(newUser));
   };
 
   const errors = useSelector((state) => state.errors);
@@ -35,6 +37,7 @@ function ApplicantRegister() {
   useEffect(() => {
     setError(checkForErrors(errors.id, errors.msg.msg));
   }, [errors]);
+
   return (
     <form onSubmit={onSubmit}>
       {alert}
@@ -71,6 +74,16 @@ function ApplicantRegister() {
         />
       </div>
       <div className="form-group">
+        <label htmlFor="company">Your Company</label>
+        <input
+          type="text"
+          id="company"
+          className="form-control"
+          name="company"
+          onChange={onChange}
+        />
+      </div>
+      <div className="form-group">
         <label htmlFor="password">Password</label>
         <input
           type="password"
@@ -92,11 +105,11 @@ function ApplicantRegister() {
       </div>
       <input
         type="submit"
-        value="Register Applicant"
+        value="Register Employer"
         className="btn btn-primary"
       />
     </form>
   );
 }
 
-export default ApplicantRegister;
+export default EmployerRegister;

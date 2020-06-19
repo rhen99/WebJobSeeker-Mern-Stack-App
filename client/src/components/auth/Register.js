@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import ApplicantLogin from "./ApplicantLogin";
-import EmployerLogin from "./EmployerLogin";
-import { renderElem } from "../helpers";
-function Login() {
+import ApplicantRegister from "./ApplicantRegister";
+import "../../Custom.css";
+import EmployerRegister from "./EmployerRegister";
+import { renderElem } from "../../helpers";
+
+function Register() {
+  const { registerForm } = useParams("applicant");
   const [formState, setFormState] = useState();
-  const { loginForm } = useParams();
   useEffect(() => {
     setFormState(
-      loginForm === "applicant" || loginForm === "employer"
-        ? loginForm
+      registerForm === "applicant" || registerForm === "employer"
+        ? registerForm
         : "applicant"
     );
-  }, [loginForm]);
+  }, [registerForm]);
+
   return (
     <div className="container push-footer mt-5">
       <div className="row justify-content-md-center">
@@ -22,33 +25,33 @@ function Login() {
               <ul className="nav nav-pills nav-fill">
                 <li className="nav-item">
                   <Link
+                    to="applicant"
                     className={renderElem(
                       formState,
                       "nav-link active",
                       "nav-link"
                     )}
-                    to="applicant"
                   >
-                    Applicant Log In
+                    Register As Applicant
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link
+                    to="employer"
                     className={renderElem(
                       formState,
                       "nav-link",
                       "nav-link active"
                     )}
-                    to="employer"
                   >
-                    Employer Log In
+                    Register As Employer
                   </Link>
                 </li>
               </ul>
             </div>
             <div className="card-body">
               <h5 className="card-title">
-                Log In as{" "}
+                Register as{" "}
                 {renderElem(
                   formState,
                   <span className="text-success font-weight-bold">
@@ -59,19 +62,11 @@ function Login() {
                   </span>
                 )}
               </h5>
-              {renderElem(formState, <ApplicantLogin />, <EmployerLogin />)}
-            </div>
-            <div className="card-footer">
-              Don't have an account?{" "}
-              <Link
-                to={renderElem(
-                  formState,
-                  "/register/applicant",
-                  "/register/employer"
-                )}
-              >
-                Register Now
-              </Link>
+              {renderElem(
+                formState,
+                <ApplicantRegister />,
+                <EmployerRegister />
+              )}
             </div>
           </div>
         </div>
@@ -80,4 +75,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;

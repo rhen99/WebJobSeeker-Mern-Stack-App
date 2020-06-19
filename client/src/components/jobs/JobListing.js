@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { fetchJobs } from "../actions/jobActions";
+import { fetchJobs } from "../../actions/jobActions";
 import { useDispatch, useSelector } from "react-redux";
 import Job from "./Job";
 function JobListing() {
