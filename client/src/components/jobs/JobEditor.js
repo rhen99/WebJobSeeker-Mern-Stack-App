@@ -14,8 +14,8 @@ function JobEditor() {
     title: "",
     salary: "",
     currency: "",
-    salary_type: "",
-    job_type: "",
+    salary_type: "year",
+    job_type: "full-time",
     description: "",
   });
   const [error, setError] = useState();
@@ -95,6 +95,7 @@ function JobEditor() {
             <div className="col">
               <label htmlFor="salary_type">Salary Type</label>
               <select
+                onChange={onChange}
                 name="salary_type"
                 id="salary_type"
                 className="form-control"
@@ -113,6 +114,7 @@ function JobEditor() {
               name="salary_type"
               className="form-control"
               id="salary_type"
+              onChange={onChange}
             >
               <option value="full-time" defaultValue>
                 Full Time

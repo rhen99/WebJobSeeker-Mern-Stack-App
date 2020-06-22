@@ -82,7 +82,6 @@ router.get("/:id", auth, async (req, res) => {
 router.post("/create", auth, async (req, res) => {
   const {
     title,
-    company_name,
     salary_type,
     job_type,
     salary,
@@ -90,7 +89,7 @@ router.post("/create", auth, async (req, res) => {
     description,
   } = req.body;
   const keywords = title.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
-  if (!title || !company_name || !description || !salary_type || !job_type)
+  if (!title || !description || !salary_type || !job_type)
     return res.status(400).json({ msg: "Please fill in all required fields." });
 
   try {
@@ -108,10 +107,7 @@ router.post("/create", auth, async (req, res) => {
       keywords,
     });
     await newJob.save();
-    res.json({
-      msg: "Job Created Successfully",
-      new_job: newJob,
-    });
+    res.json(newJob);
   } catch (err) {
     console.error(err);
     res.status(500).json("Server Error");

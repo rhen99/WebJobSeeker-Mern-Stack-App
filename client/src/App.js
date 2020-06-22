@@ -13,6 +13,7 @@ import Homepage from "./components/layouts/Homepage";
 import Dashboard from "./components/auth/Dashboard";
 import JobListing from "./components/jobs/JobListing";
 import JobEditor from "./components/jobs/JobEditor";
+import Single from "./components/jobs/Single";
 function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
@@ -31,6 +32,7 @@ function App() {
         <ProtectedRoute path="/dashboard" component={Dashboard} />
         <ProtectedRoute path="/jobs" component={JobListing} />
         <ProtectedRoute path="/editor" component={JobEditor} />
+        <ProtectedRoute path="/job/:id" component={Single} />
       </Switch>
       <Footer />
     </Router>

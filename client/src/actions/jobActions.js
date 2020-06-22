@@ -44,16 +44,18 @@ export const fetchOneJob = (id) => (dispatch) => {
 };
 export const addJob = ({
   title,
-  company_name,
   description,
   salary,
+  salary_type,
+  job_type,
   currency,
 }) => (dispatch) => {
   const body = JSON.stringify({
     title,
-    company_name,
     description,
     salary,
+    salary_type,
+    job_type,
     currency,
   });
   axios
