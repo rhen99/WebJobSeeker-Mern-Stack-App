@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { checkForErrors } from "../../helpers";
 import { Redirect } from "react-router-dom";
 import { clearErrors } from "../../actions/errorActions";
+import { Editor } from "draft-js";
 
 function JobEditor() {
   const dispatch = useDispatch();
@@ -132,7 +133,6 @@ function JobEditor() {
                 height: "200px",
               }}
               name="description"
-              id="description"
               onChange={onChange}
             ></textarea>
           </div>
