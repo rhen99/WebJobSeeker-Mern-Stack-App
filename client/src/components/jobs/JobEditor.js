@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { checkForErrors } from "../../helpers";
 import { Redirect } from "react-router-dom";
 import { clearErrors } from "../../actions/errorActions";
-import { Editor } from "draft-js";
 
 function JobEditor() {
   const dispatch = useDispatch();
@@ -110,11 +109,11 @@ function JobEditor() {
             </div>
           </div>
           <div className="form-group">
-            <label htmlFor="salary_type">Job Type</label>
+            <label htmlFor="job_type">Job Type</label>
             <select
-              name="salary_type"
+              name="job_type"
               className="form-control"
-              id="salary_type"
+              id="job_type"
               onChange={onChange}
             >
               <option value="full-time" defaultValue>

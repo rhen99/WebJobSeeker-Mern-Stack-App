@@ -1,5 +1,12 @@
 import axios from "axios";
-import { FETCH_JOBS, FETCH_RECENT_JOBS, FETCH_ONE_JOB, ADD_JOB } from "./types";
+import nl2br from "nl2br";
+import {
+  FETCH_JOBS,
+  FETCH_RECENT_JOBS,
+  FETCH_ONE_JOB,
+  ADD_JOB,
+  DELETE_JOB,
+} from "./types";
 import { returnErrors } from "./errorActions";
 import { tokenConfig } from "../helpers";
 
@@ -50,16 +57,17 @@ export const addJob = ({
   job_type,
   currency,
 }) => (dispatch) => {
+  const breakedDesc = nl2br(description);
   const body = JSON.stringify({
     title,
-    description,
+    description: breakedDesc,
     salary,
     salary_type,
     job_type,
     currency,
   });
   axios
-    .post("api/jobs/create", body, tokenConfig())
+    .post("/api/jobs/create", body, tokenConfig())
     .then((res) =>
       dispatch({
         type: ADD_JOB,
@@ -69,4 +77,17 @@ export const addJob = ({
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status, "JOB_FAIL"))
     );
+};
+export const deleteJob = (id) => (dispatch) => {
+  axios
+    .delete(`/api/jobs/${id}`, tokenConfig())
+    .then(() => {
+      dispatch({
+        type: DELETE_JOB,
+        payload: id,
+      });
+    })
+    .catch((err) => {
+      returnErrors(err.response.data, err.response.status);
+    });
 };
