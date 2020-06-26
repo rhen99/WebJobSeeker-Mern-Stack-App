@@ -37,17 +37,10 @@ function Single({ match }) {
 
   const actions =
     user.id === employer_id ? (
-      <div className="d-flex justify-content-between">
-        <div>
-          <button className="btn btn-danger" onClick={deleteFn}>
-            Delete
-          </button>
-        </div>
-        <div>
-          <Link to="/dashboard" className="btn btn-default">
-            View Applicant
-          </Link>
-        </div>
+      <div>
+        <Link to="/dashboard" className="btn btn-success btn-block">
+          View Applicants
+        </Link>
       </div>
     ) : null;
 

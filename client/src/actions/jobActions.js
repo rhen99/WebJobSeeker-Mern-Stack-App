@@ -6,8 +6,10 @@ import {
   FETCH_ONE_JOB,
   ADD_JOB,
   DELETE_JOB,
+  FETCH_POSTED_JOBS,
 } from "./types";
 import { returnErrors } from "./errorActions";
+import { returnSuccessMessage } from "./successAction";
 import { tokenConfig } from "../helpers";
 
 export const fetchJobs = () => (dispatch) => {
@@ -34,6 +36,19 @@ export const fetchRecentJobs = () => (dispatch) => {
     })
     .catch((err) => {
       dispatch(returnErrors(err.response.msg, err.response.status));
+    });
+};
+export const fetchPostedJobs = () => (dispatch) => {
+  axios
+    .get("/api/jobs/posted", tokenConfig())
+    .then((res) => {
+      dispatch({
+        type: FETCH_POSTED_JOBS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      returnErrors(err.response.data, err.response.status);
     });
 };
 export const fetchOneJob = (id) => (dispatch) => {
@@ -68,12 +83,14 @@ export const addJob = ({
   });
   axios
     .post("/api/jobs/create", body, tokenConfig())
-    .then((res) =>
+    .then((res) => {
       dispatch({
         type: ADD_JOB,
-        payload: res.data,
-      })
-    )
+        payload: res.data.job,
+      });
+
+      dispatch(returnSuccessMessage(res.data.msg, res.status, "SUCCESS"));
+    })
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status, "JOB_FAIL"))
     );

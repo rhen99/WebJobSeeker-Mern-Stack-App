@@ -1,11 +1,39 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { checkForSuccessMessages } from "../../helpers";
+import { clearSuccess } from "../../actions/successAction";
+import { fetchPostedJobs } from "../../actions/jobActions";
+import moment from "moment";
 function Dashboard() {
   const user = JSON.parse(localStorage.getItem("user"));
+  const success = useSelector((state) => state.success);
   const errors = useSelector((state) => state.errors);
+  const jobs = useSelector((state) => state.jobCollection.jobs);
+
+  const dispatch = useDispatch();
 
   const { firstname, lastname, role } = user;
+
+  const [msg, setMsg] = useState(null);
+
+  useEffect(() => setMsg(checkForSuccessMessages(success.id, success.msg)), [
+    success,
+  ]);
+  useEffect(() => {
+    dispatch(fetchPostedJobs());
+  }, [dispatch]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearSuccess());
+    };
+  }, []);
+
+  const flashMsg = checkForSuccessMessages(
+    success.id,
+    <div className="alert alert-success">{msg}</div>
+  );
 
   if (errors.id === "JOB_FAIL") {
     return <Redirect to="/editor" />;
@@ -34,6 +62,7 @@ function Dashboard() {
       case "employer":
         return (
           <div className="push-footer container mt-5">
+            {flashMsg}
             <h2 className="my-2">
               {firstname} {lastname}
             </h2>
@@ -48,7 +77,13 @@ function Dashboard() {
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
-              <tbody></tbody>
+              <tbody>
+                {jobs.map((job) => (
+                  <tr scope="row" key={job._id}>
+                    <td>{moment(job.created_at).format("L")}</td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
         );

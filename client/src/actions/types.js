@@ -1,4 +1,5 @@
 export const FETCH_JOBS = "FETCH_JOBS";
+export const FETCH_POSTED_JOBS = "FETCH_POSTED_JOBS";
 export const ADD_JOB = "ADD_JOB";
 export const EDIT_JOB = "EDIT_JOB";
 export const UPDATE_JOB = "UPDATE_JOB";
@@ -14,3 +15,5 @@ export const AUTH_ERROR = "AUTH_ERROR";
 export const GET_ERRORS = "GET_ERRORS";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const LOAD_USER = "LOAD_USER";
+export const GET_SUCCESS = "GET_SUCCESS";
+export const CLEAR_SUCCESS = "CLEAR_SUCCESS";

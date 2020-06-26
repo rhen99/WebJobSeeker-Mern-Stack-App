@@ -2,6 +2,7 @@ import {
   FETCH_JOBS,
   FETCH_ONE_JOB,
   FETCH_RECENT_JOBS,
+  FETCH_POSTED_JOBS,
   ADD_JOB,
   EDIT_JOB,
   UPDATE_JOB,
@@ -17,6 +18,8 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case FETCH_JOBS:
+    case FETCH_RECENT_JOBS:
+    case FETCH_POSTED_JOBS:
       return {
         ...state,
         jobs: action.payload,
@@ -26,11 +29,7 @@ export default (state = initialState, action) => {
         ...state,
         job: action.payload,
       };
-    case FETCH_RECENT_JOBS:
-      return {
-        ...state,
-        jobs: action.payload,
-      };
+
     case ADD_JOB:
     case UPDATE_JOB:
       return {

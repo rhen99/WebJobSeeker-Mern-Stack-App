@@ -20,7 +20,7 @@ function RecentJobs() {
             <div className="col-lg-4 col-md-6 pb-2" key={job._id}>
               <div className="card">
                 <div className="card-body">
-                  <Link to="#">
+                  <Link to={`/job/${job._id}`}>
                     <h5 className="card-title">{job.title}</h5>
                   </Link>
                   <p>

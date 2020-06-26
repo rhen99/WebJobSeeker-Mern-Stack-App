@@ -35,6 +35,21 @@ router.get("/recent", async (req, res) => {
     });
   }
 });
+
+// @route GET api/jobs/posted
+// @desc Get empoloyer posted jobs
+// @access Private
+
+router.get("/posted", auth, async (req, res) => {
+  try {
+    const jobs = await Job.find({ employer_id: req.user.id });
+    res.json(jobs);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json("Server Error");
+  }
+});
+
 // @route GET api/jobs/search
 // @desc Search Jobs
 // @access Private
@@ -107,7 +122,10 @@ router.post("/create", auth, async (req, res) => {
       keywords,
     });
     await newJob.save();
-    res.json(newJob);
+    res.json({
+      msg: "Created Successfully",
+      job: newJob,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json("Server Error");

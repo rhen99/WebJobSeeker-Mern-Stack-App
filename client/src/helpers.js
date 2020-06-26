@@ -5,6 +5,9 @@ export const checkForErrors = (type, hasErrors, noErrors = null) => {
     ? hasErrors
     : noErrors;
 };
+export const checkForSuccessMessages = (type, hasMsg, noMsg = null) => {
+  return type === "SUCCESS" ? hasMsg : noMsg;
+};
 export const renderElem = (current, applicant, employer) => {
   switch (current) {
     case "applicant":
@@ -15,6 +18,7 @@ export const renderElem = (current, applicant, employer) => {
       return null;
   }
 };
+
 export const isAuth = (isAuth, notAuth) => {
   return localStorage.getItem("token") ? isAuth : notAuth;
 };
