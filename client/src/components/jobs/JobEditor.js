@@ -5,10 +5,11 @@ import { checkForErrors } from "../../helpers";
 import { Redirect } from "react-router-dom";
 import { clearErrors } from "../../actions/errorActions";
 
-function JobEditor() {
+function JobEditor({ match }) {
   const dispatch = useDispatch();
 
   const errors = useSelector((state) => state.errors);
+  const jobs = useSelector((state) => state.jobCollection);
 
   const [job, setJob] = useState({
     title: "",
@@ -18,17 +19,32 @@ function JobEditor() {
     job_type: "full-time",
     description: "",
   });
+  const [editedJob, setEditedJob] = useState({
+    title: "",
+    salary: "",
+    currency: "",
+    salary_type: "",
+    job_type: "",
+    description: "",
+  });
   const [error, setError] = useState();
 
   const [redirect, setRedirect] = useState(false);
 
   const onChange = (e) => {
-    setJob({ ...job, [e.target.name]: e.target.value });
+    if (Object.keys(match.params).length > 0) {
+      setEditedJob({ ...editedJob, [e.target.name]: e.target.value });
+    } else {
+      setJob({ ...job, [e.target.name]: e.target.value });
+    }
   };
   const onSubmit = (e) => {
-    e.preventDefault();
-    dispatch(addJob(job));
-    setRedirect(true);
+    if (Object.keys(match.params).length > 0) {
+    } else {
+      e.preventDefault();
+      dispatch(addJob(job));
+      setRedirect(true);
+    }
   };
   const cancelJob = (e) => {
     e.preventDefault();
@@ -39,6 +55,7 @@ function JobEditor() {
     setError(checkForErrors(errors.id, errors.msg.msg));
   }, [errors]);
 
+  useEffect(() => {}, [match.params]);
   const alert = checkForErrors(
     errors.id,
     <div className="alert alert-danger">{error}</div>

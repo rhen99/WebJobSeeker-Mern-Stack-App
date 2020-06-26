@@ -28,6 +28,7 @@
 }
 .push-footer {
   min-height: calc(100vh - 162px);
+  padding-bottom: 2rem;
 }
 @media (max-width: 1024px) {
   .nav--custom {

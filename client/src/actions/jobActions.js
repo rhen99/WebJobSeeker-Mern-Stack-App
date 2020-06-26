@@ -98,11 +98,12 @@ export const addJob = ({
 export const deleteJob = (id) => (dispatch) => {
   axios
     .delete(`/api/jobs/${id}`, tokenConfig())
-    .then(() => {
+    .then((res) => {
       dispatch({
         type: DELETE_JOB,
         payload: id,
       });
+      dispatch(returnSuccessMessage(res.data.msg, res.status, "SUCCESS"));
     })
     .catch((err) => {
       returnErrors(err.response.data, err.response.status);

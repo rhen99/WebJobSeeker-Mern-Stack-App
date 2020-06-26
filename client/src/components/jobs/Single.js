@@ -38,9 +38,12 @@ function Single({ match }) {
   const actions =
     user.id === employer_id ? (
       <div>
-        <Link to="/dashboard" className="btn btn-success btn-block">
-          View Applicants
+        <Link to="/dashboard" className="btn btn-info btn-block">
+          <i className="fas fa-users"></i> View Applicants
         </Link>
+        <button className="btn btn-danger btn-block" onClick={deleteFn}>
+          <i className="fas fa-trash"></i> Delete
+        </button>
       </div>
     ) : null;
 

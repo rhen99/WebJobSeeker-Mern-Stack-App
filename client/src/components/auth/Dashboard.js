@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { checkForSuccessMessages } from "../../helpers";
 import { clearSuccess } from "../../actions/successAction";
-import { fetchPostedJobs } from "../../actions/jobActions";
+import { fetchPostedJobs, deleteJob } from "../../actions/jobActions";
 import moment from "moment";
+import numeral from "numeral";
+
 function Dashboard() {
   const user = JSON.parse(localStorage.getItem("user"));
   const success = useSelector((state) => state.success);
@@ -22,7 +24,7 @@ function Dashboard() {
   ]);
   useEffect(() => {
     dispatch(fetchPostedJobs());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -68,23 +70,33 @@ function Dashboard() {
             </h2>
             <h5>Employer</h5>
             <h3 className="my-3">Posted Jobs</h3>
-            <table className="table">
-              <thead>
-                <tr>
-                  <th scope="col">Date</th>
-                  <th scope="col">Title</th>
-                  <th scope="col">Applicants</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {jobs.map((job) => (
-                  <tr scope="row" key={job._id}>
-                    <td>{moment(job.created_at).format("L")}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            {jobs.map((job) => (
+              <div className="card my-3" key={job._id}>
+                <div className="card-body">
+                  <Link to={`/job/${job._id}`}>
+                    <h5 className="card-title">{job.title}</h5>
+                  </Link>
+                  <p>
+                    <span className="text-muted">{job.company_name}</span> -{" "}
+                    <span className="text-success font-weight-bold">
+                      {job.currency} {numeral(job.salary).format("0a")}
+                    </span>{" "}
+                    Posted{" "}
+                    <span className="text-warning font-weight-bold">
+                      {moment(job.created_at).startOf("day").fromNow()}
+                    </span>
+                    <span className="font-weight-bold ml-2">
+                      {numeral(job.applications.length).format("0a")} applicants
+                    </span>
+                  </p>
+                </div>
+                <div className="card-footer bg-transparent">
+                  <Link className="btn btn-primary mr-1" to="#">
+                    <i className="fas fa-edit"></i> Edit
+                  </Link>
+                </div>
+              </div>
+            ))}
           </div>
         );
 

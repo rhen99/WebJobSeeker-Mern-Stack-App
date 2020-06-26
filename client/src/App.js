@@ -33,6 +33,7 @@ function App() {
         <ProtectedRoute path="/jobs" component={JobListing} />
         <ProtectedRoute path="/editor" component={JobEditor} />
         <ProtectedRoute path="/job/:id" component={Single} />
+        <ProtectedRoute path="/job/edit/:id" component={JobEditor} />
       </Switch>
       <Footer />
     </Router>
