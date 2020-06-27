@@ -12,7 +12,6 @@ import {
 const initialState = {
   jobs: [],
   job: {},
-  isEdit: false,
 };
 
 export default (state = initialState, action) => {
@@ -39,7 +38,6 @@ export default (state = initialState, action) => {
     case EDIT_JOB:
       return {
         ...state,
-        isEdit: true,
       };
     case DELETE_JOB:
       return {

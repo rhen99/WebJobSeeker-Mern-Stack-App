@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { addJob } from "../../actions/jobActions";
+import { addJob, fetchOneJob } from "../../actions/jobActions";
 import { useDispatch, useSelector } from "react-redux";
 import { checkForErrors } from "../../helpers";
 import { Redirect } from "react-router-dom";
@@ -20,13 +20,14 @@ function JobEditor({ match }) {
     description: "",
   });
   const [editedJob, setEditedJob] = useState({
-    title: "",
-    salary: "",
-    currency: "",
-    salary_type: "",
-    job_type: "",
-    description: "",
+    title: jobs.job.title,
+    salary: jobs.job.salary,
+    currency: jobs.job.currency,
+    salary_type: jobs.job.salary_type,
+    job_type: jobs.job.job_type,
+    description: jobs.job.description,
   });
+
   const [error, setError] = useState();
 
   const [redirect, setRedirect] = useState(false);
@@ -55,7 +56,21 @@ function JobEditor({ match }) {
     setError(checkForErrors(errors.id, errors.msg.msg));
   }, [errors]);
 
-  useEffect(() => {}, [match.params]);
+  useEffect(() => {
+    if (Object.keys(match.params).length > 0) {
+      dispatch(fetchOneJob(match.params.id));
+      setEditedJob({
+        title: jobs.job.title,
+        salary: jobs.job.salary,
+        currency: jobs.job.currency,
+        salary_type: jobs.job.salary_type,
+        job_type: jobs.job.job_type,
+        description: jobs.job.description,
+      });
+    } else {
+      setEditedJob({});
+    }
+  }, [match.params]);
   const alert = checkForErrors(
     errors.id,
     <div className="alert alert-danger">{error}</div>
@@ -68,6 +83,26 @@ function JobEditor({ match }) {
       onClick={cancelJob}
     />
   );
+  useEffect(() => {
+    return () => {
+      setEditedJob({
+        title: "",
+        salary: "",
+        currency: "",
+        salary_type: "",
+        job_type: "",
+        description: "",
+      });
+      setJob({
+        title: "",
+        salary: "",
+        currency: "",
+        salary_type: "",
+        job_type: "",
+        description: "",
+      });
+    };
+  }, []);
 
   if (redirect) {
     return <Redirect to="/dashboard" />;
@@ -75,6 +110,7 @@ function JobEditor({ match }) {
     return (
       <div className="container push-footer mt-5">
         {alert}
+        {console.log(editedJob)}
         <h3 className="mb-3">Job Editor</h3>
         <form onSubmit={onSubmit}>
           <div className="form-group">
@@ -85,6 +121,7 @@ function JobEditor({ match }) {
               id="title"
               name="title"
               onChange={onChange}
+              value={editedJob.title}
             />
           </div>
 
@@ -97,6 +134,7 @@ function JobEditor({ match }) {
                 name="salary"
                 className="form-control"
                 onChange={onChange}
+                value={editedJob.salary}
               />
             </div>
             <div className="col">
@@ -107,6 +145,7 @@ function JobEditor({ match }) {
                 className="form-control"
                 name="currency"
                 onChange={onChange}
+                value={editedJob.currency}
               />
             </div>
             <div className="col">
@@ -117,11 +156,27 @@ function JobEditor({ match }) {
                 id="salary_type"
                 className="form-control"
               >
-                <option value="year" defaultValue>
-                  Yearly
-                </option>
-                <option value="month">Monthly</option>
-                <option value="hour">Hourly</option>
+                {editedJob.salary_type === "year" ? (
+                  <option value="year" defaultValue>
+                    Yearly
+                  </option>
+                ) : (
+                  <option value="year">Yearly</option>
+                )}
+                {editedJob.salary_type === "month" ? (
+                  <option value="month" defaultValue>
+                    Monthly
+                  </option>
+                ) : (
+                  <option value="month">Monthly</option>
+                )}
+                {editedJob.salary_type === "hour" ? (
+                  <option value="hour" defaultValue>
+                    Hourly
+                  </option>
+                ) : (
+                  <option value="hour">Hourly</option>
+                )}
               </select>
             </div>
           </div>
@@ -133,11 +188,27 @@ function JobEditor({ match }) {
               id="job_type"
               onChange={onChange}
             >
-              <option value="full-time" defaultValue>
-                Full Time
-              </option>
-              <option value="freelance">Freelance</option>
-              <option value="part-time">Part Time</option>
+              {editedJob.job_type === "full-time" ? (
+                <option defaultValue value="full-time">
+                  Full Time
+                </option>
+              ) : (
+                <option value="full-time">Full Time</option>
+              )}
+              {editedJob.job_type === "freelance" ? (
+                <option defaultValue value="freelance">
+                  Freelance
+                </option>
+              ) : (
+                <option value="freelance">Freelance</option>
+              )}
+              {editedJob.job_type === "part-time" ? (
+                <option defaultValue value="part-time">
+                  Part Time
+                </option>
+              ) : (
+                <option value="part-time">Part Time</option>
+              )}
             </select>
           </div>
           <div className="form-group">
@@ -150,6 +221,7 @@ function JobEditor({ match }) {
               }}
               name="description"
               onChange={onChange}
+              value={editedJob.description}
             ></textarea>
           </div>
           <input

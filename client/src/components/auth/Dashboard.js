@@ -91,7 +91,10 @@ function Dashboard() {
                   </p>
                 </div>
                 <div className="card-footer bg-transparent">
-                  <Link className="btn btn-primary mr-1" to="#">
+                  <Link
+                    className="btn btn-primary mr-1"
+                    to={`/job/edit/${job._id}`}
+                  >
                     <i className="fas fa-edit"></i> Edit
                   </Link>
                 </div>

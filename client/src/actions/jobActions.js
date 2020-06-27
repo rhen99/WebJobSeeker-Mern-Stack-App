@@ -109,3 +109,4 @@ export const deleteJob = (id) => (dispatch) => {
       returnErrors(err.response.data, err.response.status);
     });
 };
+export const updateJob = (id) => {};
