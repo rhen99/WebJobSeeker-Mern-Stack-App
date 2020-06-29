@@ -85,9 +85,7 @@ function Dashboard() {
                     <span className="text-warning font-weight-bold">
                       {moment(job.created_at).startOf("day").fromNow()}
                     </span>
-                    <span className="font-weight-bold ml-2">
-                      {numeral(job.applications.length).format("0a")} applicants
-                    </span>
+                    <span className="font-weight-bold ml-2">applicants</span>
                   </p>
                 </div>
                 <div className="card-footer bg-transparent">

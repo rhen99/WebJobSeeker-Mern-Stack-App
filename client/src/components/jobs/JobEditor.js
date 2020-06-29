@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { addJob, fetchOneJob } from "../../actions/jobActions";
+import { addJob, fetchOneJob, updateJob } from "../../actions/jobActions";
 import { useDispatch, useSelector } from "react-redux";
 import { checkForErrors } from "../../helpers";
 import { Redirect } from "react-router-dom";
@@ -41,6 +41,9 @@ function JobEditor({ match }) {
   };
   const onSubmit = (e) => {
     if (Object.keys(match.params).length > 0) {
+      e.preventDefault();
+      dispatch(updateJob(match.params.id, editedJob));
+      setRedirect(true);
     } else {
       e.preventDefault();
       dispatch(addJob(job));
@@ -110,7 +113,6 @@ function JobEditor({ match }) {
     return (
       <div className="container push-footer mt-5">
         {alert}
-        {console.log(editedJob)}
         <h3 className="mb-3">Job Editor</h3>
         <form onSubmit={onSubmit}>
           <div className="form-group">

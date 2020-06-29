@@ -7,6 +7,7 @@ import {
   ADD_JOB,
   DELETE_JOB,
   FETCH_POSTED_JOBS,
+  UPDATE_JOB,
 } from "./types";
 import { returnErrors } from "./errorActions";
 import { returnSuccessMessage } from "./successAction";
@@ -109,4 +110,29 @@ export const deleteJob = (id) => (dispatch) => {
       returnErrors(err.response.data, err.response.status);
     });
 };
-export const updateJob = (id) => {};
+export const updateJob = (
+  id,
+  { title, description, salary, salary_type, job_type, currency }
+) => (dispatch) => {
+  const breakedDesc = nl2br(description);
+  const body = JSON.stringify({
+    title,
+    description: breakedDesc,
+    salary,
+    salary_type,
+    job_type,
+    currency,
+  });
+  axios
+    .put(`/api/jobs/${id}`, body, tokenConfig())
+    .then((res) => {
+      dispatch({
+        type: UPDATE_JOB,
+        payload: res.data,
+      });
+      dispatch(returnSuccessMessage(res.data.msg, res.status, "SUCCESS"));
+    })
+    .catch((err) => {
+      returnErrors(err.response.data, err.response.status);
+    });
+};
